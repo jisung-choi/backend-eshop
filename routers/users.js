@@ -13,7 +13,18 @@ router.get(`/`, async (req, res) =>{
     res.send(userList);
 })
 
+//for userAdmin access only
 router.get('/:id', async(req,res)=>{
+    const user = await User.findById(req.params.id).select('-passwordHash');
+
+    if(!user) {
+        res.status(500).json({message: 'The user with the given ID was not found.'})
+    } 
+    res.status(200).send(user);
+})
+
+// separate api for user to access its own user info like shipping address
+router.get('/info/:id', async(req,res)=>{
     const user = await User.findById(req.params.id).select('-passwordHash');
 
     if(!user) {

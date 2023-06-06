@@ -14,14 +14,18 @@ function authJwt() {
             { url: /\/api\/v1\/products(.*)/, methods: ['GET', 'OPTIONS'] },
             { url: /\/api\/v1\/categories(.*)/, methods: ['GET', 'OPTIONS'] },
             { url: /\/api\/v1\/orders(.*)/, methods: ['GET', 'OPTIONS', 'POST'] },
+            //for user to autoFill info on checkout & register as user
+            { url: /\/api\/v1\/users\/info(.*)/, methods: ['GET', 'OPTIONS', 'POST'] },
             `${api}/users/login`,
-            `${api}/users/register` 
+            `${api}/users/register`,
+            `${api}/admins/login` 
         ]
     })
 }
 
 async function isRevoked(req, payload) {
     console.log(payload.payload.isAdmin);
+    // change to isUsersAdmin || isProductsAdmin || isOrdersAdmin
     if (!payload.payload.isAdmin) {
       return true; // not admin so cancel request
     }
