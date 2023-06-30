@@ -42,7 +42,10 @@ app.use(`${api}/admins`, adminsRouter)
 
 
 //Can add option if can't connect to db due to errors
-mongoose.connect(process.env.CONNECTION_STRING)
+mongoose.connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
 .then(() => {
     console.log('Databse Connection is ready...')
 })
